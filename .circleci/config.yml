@@ -110,4 +110,3 @@ workflows:
       - deploy_production:
           requires:
             - confirm_deploy
-view raw config.yml hosted with ❤ by GitHub
