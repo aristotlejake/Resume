@@ -1,7 +1,7 @@
 
 title: Jake Armstrong
-url: 'http://webjeda.com'
-baseurl: 'Resume' #change it according to your repository name
+url: 'https://resume.jakearmstrong.me'
+baseurl: "" #change it according to your repository name
 
 
 # Enable one of these styles by removing #. Style will be applied only after restarting the build or serve.
