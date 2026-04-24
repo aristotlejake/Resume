@@ -1,31 +1,19 @@
-
-title: Jake Armstrong
+title: Jake Armstrong — Security & Cloud Architect
 url: 'https://resume.jakearmstrong.me'
-baseurl: "" #change it according to your repository name
+baseurl: ""
+description: >-
+  Jake Armstrong — Security & Cloud Architect and DevOps Engineer. CISSP.
+  Building and securing cloud infrastructure for modern enterprises.
 
-
-# Enable one of these styles by removing #. Style will be applied only after restarting the build or serve.
-#style: styles-2
-#style: styles-3
-#style: styles-4
-#style: styles-5
 style: styles-6
 
-
-#Profile information
 name: Jake Armstrong
-tagline: Cybersecurity Specialist/Systems & Cloud Architect/DevOps Engineer
-pic: profile.png  #place a 100x100 picture inside /assets/images/ folder and provide the name of the file below
+tagline: Security & Cloud Architect · DevOps Engineer
+pic: profile.png
 
-#sidebar links
 email: mail@jakearmstrong.me
-phone: 435 215 6809
-website: blog.jakearmstrong.me #do not add http://
+website: blog.jakearmstrong.me
 linkedin: jakemarmstrong
 github: aristotlejake
-twitter: '@jakemarmstrong'
 
-
-# Tracker
-analytics: UA-83979019-1
-#Update all the sections by editing the files inside _includes folder.
+resume_url: https://1drv.ms/b/c/3b8f2d59b27f1e24/EV9QHjtHcBRKpf5uknIDPvEB75vRsTejLItCLqTTkmM7aQ?e=H5ILvU
