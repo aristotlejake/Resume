@@ -67,10 +67,19 @@ ul { padding-left: 1.1rem; }
 .list-unstyled { list-style: none; padding: 0; margin: 0; }
 .text-center { text-align: center; }
 
-/* Inline SVG icons */
-.icon { width: 1em; height: 1em; vertical-align: -0.15em; fill: currentColor; stroke: currentColor; }
-.section-title .icon { width: 1.05em; height: 1.05em; margin-right: 10px; color: var(--c-accent); }
-.contact-list .icon { width: 15px; height: 15px; margin-right: 12px; color: var(--c-accent); flex-shrink: 0; }
+/* Inline SVG icons — must be forceful; no Bootstrap reset */
+svg.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+.section-title svg.icon { width: 16px; height: 16px; margin-right: 10px; color: var(--c-accent); }
+.contact-list svg.icon { width: 15px; height: 15px; margin-right: 12px; color: var(--c-accent); }
+.btn-primary svg.icon { width: 14px; height: 14px; }
+#theme-toggle svg.icon { width: 16px; height: 16px; }
 
 /* ======= Layout ======= */
 .wrapper {
@@ -87,8 +96,8 @@ ul { padding-left: 1.1rem; }
 .sidebar-wrapper {
   background: var(--c-sidebar-gradient);
   color: #e9eef2;
-  padding: 48px 36px;
-  width: 300px;
+  padding: 48px 32px;
+  width: 340px;
   position: absolute;
   right: 0;
   top: 0;
@@ -197,10 +206,10 @@ ul { padding-left: 1.1rem; }
   background: var(--c-card);
   color: var(--c-text);
   padding: 48px 56px 56px;
-  margin-right: 300px;
+  margin-right: 340px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .sidebar-wrapper { position: static; width: 100%; min-height: auto; }
   .main-wrapper { margin-right: 0; padding: 32px 24px; }
 }
