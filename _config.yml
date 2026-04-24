@@ -23,3 +23,8 @@ resume_url: /assets/resume.pdf
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
+
+# Jekyll skips dot-prefixed paths by default; whitelist .well-known so
+# /.well-known/security.txt (RFC 9116) gets published.
+include:
+  - .well-known
