@@ -67,10 +67,19 @@ ul { padding-left: 1.1rem; }
 .list-unstyled { list-style: none; padding: 0; margin: 0; }
 .text-center { text-align: center; }
 
-/* Inline SVG icons */
-.icon { width: 1em; height: 1em; vertical-align: -0.15em; fill: currentColor; stroke: currentColor; }
-.section-title .icon { width: 1.05em; height: 1.05em; margin-right: 10px; color: var(--c-accent); }
-.contact-list .icon { width: 15px; height: 15px; margin-right: 12px; color: var(--c-accent); flex-shrink: 0; }
+/* Inline SVG icons — must be forceful; no Bootstrap reset anymore */
+svg.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+.section-title svg.icon { width: 16px; height: 16px; margin-right: 10px; color: var(--c-accent); }
+.contact-list svg.icon { width: 15px; height: 15px; margin-right: 12px; color: var(--c-accent); }
+.btn-primary svg.icon { width: 14px; height: 14px; }
+#theme-toggle svg.icon { width: 16px; height: 16px; }
 
 /* ======= Layout ======= */
 .wrapper {
