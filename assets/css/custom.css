@@ -96,8 +96,8 @@ svg.icon {
 .sidebar-wrapper {
   background: var(--c-sidebar-gradient);
   color: #e9eef2;
-  padding: 48px 36px;
-  width: 300px;
+  padding: 48px 32px;
+  width: 340px;
   position: absolute;
   right: 0;
   top: 0;
@@ -206,10 +206,10 @@ svg.icon {
   background: var(--c-card);
   color: var(--c-text);
   padding: 48px 56px 56px;
-  margin-right: 300px;
+  margin-right: 340px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 940px) {
   .sidebar-wrapper { position: static; width: 100%; min-height: auto; }
   .main-wrapper { margin-right: 0; padding: 32px 24px; }
 }
