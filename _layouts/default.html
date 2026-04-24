@@ -2,25 +2,29 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<html lang="en">
 {% include head.html %}
-
 <body>
+    {% include icons.html %}
     <div class="wrapper">
         {% include sidebar.html %}
-        
         <div class="main-wrapper">
-           
-           {{content}}
-            
-        </div><!--//main-body-->
+            <nav class="top-nav" aria-label="Section navigation">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                </ul>
+                <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
+                    <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+                    <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+                </button>
+            </nav>
+            {{content}}
+        </div>
     </div>
- 
-{% include footer.html %}
- 
-{% include scripts.html %}
+    {% include footer.html %}
+    {% include scripts.html %}
 </body>
-</html> 
-
+</html>

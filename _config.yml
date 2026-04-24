@@ -10,10 +10,16 @@ style: styles-6
 name: Jake Armstrong
 tagline: Security & Cloud Architect · DevOps Engineer
 pic: profile.png
+og_image: og-image.svg
 
 email: mail@jakearmstrong.me
 website: blog.jakearmstrong.me
 linkedin: jakemarmstrong
 github: aristotlejake
+location: St. George, Utah, USA
 
-resume_url: https://1drv.ms/b/c/3b8f2d59b27f1e24/EV9QHjtHcBRKpf5uknIDPvEB75vRsTejLItCLqTTkmM7aQ?e=H5ILvU
+resume_url: /assets/resume.pdf
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
