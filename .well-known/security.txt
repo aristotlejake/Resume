@@ -1,0 +1,8 @@
+# If you've found a security issue with this site or wish to report
+# something related to me personally, please reach out via the contact
+# below. Thanks for looking — and for letting me know responsibly.
+
+Contact: mailto:mail@jakearmstrong.me
+Expires: 2027-04-24T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://resume.jakearmstrong.me/.well-known/security.txt
