@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr create --title 'Modernize resume site: typography, dark mode, content refresh' --body ' *)",
+      "Bash(gh pr *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git branch *)"
+    ]
+  }
+}
