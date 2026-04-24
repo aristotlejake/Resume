@@ -4,27 +4,70 @@
     <title>{{site.title}}</title>
     <meta name="description" content="{{site.description}}">
     <meta name="author" content="{{site.name}}">
-    <meta name="theme-color" content="#4B6A78">
+    <meta name="theme-color" content="#2f4a57" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1b2a33" media="(prefers-color-scheme: dark)">
 
     <meta property="og:type" content="profile">
     <meta property="og:title" content="{{site.title}}">
     <meta property="og:description" content="{{site.description}}">
     <meta property="og:url" content="{{site.url}}">
-    <meta property="og:image" content="{{site.url}}/assets/images/{{site.pic}}">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="{{site.url}}/assets/images/{{site.og_image}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{site.title}}">
     <meta name="twitter:description" content="{{site.description}}">
-    <meta name="twitter:image" content="{{site.url}}/assets/images/{{site.pic}}">
+    <meta name="twitter:image" content="{{site.url}}/assets/images/{{site.og_image}}">
 
-    <link rel="shortcut icon" href="{{site.baseurl}}/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="{{site.baseurl}}/favicon.svg">
+    <link rel="alternate icon" href="{{site.baseurl}}/favicon.ico">
     <link rel="canonical" href="{{site.url}}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{site.baseurl}}/assets/plugins/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{site.baseurl}}/assets/plugins/font-awesome/css/font-awesome.css">
-    <link id="theme-style" rel="stylesheet" href="{{site.baseurl}}/assets/css/{% if site.style %}{{ site.style}}.css{% else %}styles.css{% endif %}">
+    <link rel="stylesheet" href="{{site.baseurl}}/assets/css/{% if site.style %}{{ site.style}}.css{% else %}styles.css{% endif %}">
     <link rel="stylesheet" href="{{site.baseurl}}/assets/css/custom.css">
+
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = saved || (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{site.name}}",
+      "jobTitle": "{{site.tagline}}",
+      "description": "{{site.description}}",
+      "url": "{{site.url}}",
+      "image": "{{site.url}}/assets/images/{{site.pic}}",
+      "email": "mailto:{{site.email}}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{site.location}}"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/{{site.linkedin}}",
+        "https://github.com/{{site.github}}",
+        "https://{{site.website}}"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Zonos"
+      },
+      "alumniOf": [
+        {"@type": "CollegeOrUniversity", "name": "Southern Utah University"},
+        {"@type": "CollegeOrUniversity", "name": "Utah Tech University"}
+      ],
+      "hasCredential": [
+        {"@type": "EducationalOccupationalCredential", "name": "CISSP", "credentialCategory": "certification"},
+        {"@type": "EducationalOccupationalCredential", "name": "M.S. Cybersecurity with Information Assurance", "credentialCategory": "degree"}
+      ]
+    }
+    </script>
 </head>

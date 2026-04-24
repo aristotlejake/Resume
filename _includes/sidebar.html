@@ -8,16 +8,16 @@
     <div class="contact-container container-block">
         <ul class="list-unstyled contact-list">
             {% if site.email %}
-            <li class="email"><i class="fa fa-envelope"></i><a href="mailto:{{site.email}}">{{site.email}}</a></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:{{site.email}}">{{site.email}}</a></li>
             {% endif %}
             {% if site.website %}
-            <li class="website"><i class="fa fa-globe"></i><a href="https://{{site.website}}" target="_blank" rel="noopener">{{site.website}}</a></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><a href="https://{{site.website}}" target="_blank" rel="noopener">{{site.website}}</a></li>
             {% endif %}
             {% if site.linkedin %}
-            <li class="linkedin"><i class="fa fa-linkedin"></i><a href="https://www.linkedin.com/in/{{site.linkedin}}" target="_blank" rel="noopener">linkedin.com/in/{{site.linkedin}}</a></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg><a href="https://www.linkedin.com/in/{{site.linkedin}}" target="_blank" rel="noopener">linkedin.com/in/{{site.linkedin}}</a></li>
             {% endif %}
             {% if site.github %}
-            <li class="github"><i class="fa fa-github"></i><a href="https://github.com/{{site.github}}" target="_blank" rel="noopener">github.com/{{site.github}}</a></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg><a href="https://github.com/{{site.github}}" target="_blank" rel="noopener">github.com/{{site.github}}</a></li>
             {% endif %}
         </ul>
     </div>
