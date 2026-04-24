@@ -151,7 +151,6 @@ svg.icon {
   align-items: center;
   font-size: 0.88rem;
   line-height: 1.9;
-  word-break: break-word;
 }
 .contact-list li a { flex: 1; }
 
