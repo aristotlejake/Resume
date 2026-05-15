@@ -426,41 +426,80 @@ svg.icon {
   .ai-section > ul { grid-template-columns: 1fr; }
 }
 
-/* ======= Skills (tag chips) ======= */
-.skill-group { margin-bottom: 22px; }
+/* ======= Skills (action-grouped grid with brand icons) ======= */
+.skill-group { margin-bottom: 26px; }
 
 .skill-group-title {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  color: var(--c-text);
+  margin: 0 0 4px;
+}
+
+.skill-group-tagline {
+  font-size: 0.82rem;
   color: var(--c-text-muted);
-  margin: 0 0 10px;
+  margin: 0 0 12px;
+  line-height: 1.4;
 }
 
 .skill-tags {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 6px;
 }
 
 .skill-tags li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: var(--c-chip-bg);
   color: var(--c-chip-text);
   font-size: 0.82rem;
   font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 999px;
+  padding: 8px 12px;
+  border-radius: 6px;
   border: 1px solid var(--c-border);
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  min-height: 32px;
+  line-height: 1.25;
+  transition: background 0.15s ease, color 0.15s ease,
+              border-color 0.15s ease, transform 0.15s ease;
 }
 .skill-tags li:hover {
   background: var(--c-accent);
   color: #fff;
   border-color: var(--c-accent);
+  transform: translateY(-1px);
+}
+
+.skill-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  object-fit: contain;
+  display: block;
+}
+
+/* Non-brand icons (Simple Icons set) are black — invert them in dark mode
+   so they stay legible on a dark chip background. Brand-color icons
+   (AWS, Azure, PowerShell) are exempt via .skill-icon--brand. */
+:root[data-theme="dark"] .skill-icon:not(.skill-icon--brand) {
+  filter: invert(1) brightness(1.5);
+}
+
+/* On hover the chip background turns accent (white text) — flip
+   non-brand icons to white for contrast. */
+.skill-tags li:hover .skill-icon:not(.skill-icon--brand) {
+  filter: invert(1) brightness(2);
+}
+:root[data-theme="dark"] .skill-tags li:hover .skill-icon:not(.skill-icon--brand) {
+  /* In dark mode we already inverted; on hover keep them inverted (still white) */
+  filter: invert(1) brightness(2);
 }
 
 .level-bar { display: none; }
@@ -855,11 +894,19 @@ svg.icon {
   .projects-section .project-title { color: #000 !important; }
   .projects-section .item:hover { transform: none !important; border-color: transparent !important; }
 
-  /* Skills: compact bordered chips */
+  /* Skills: compact bordered chips, flow as flex (no grid in print) */
   .skill-group { margin-bottom: 6pt !important; page-break-inside: avoid !important; }
   .skill-group-title { color: #000 !important; font-size: 9pt !important; margin: 0 0 3pt !important; }
-  .skill-tags { gap: 3pt 4pt !important; }
+  .skill-group-tagline { display: none !important; }
+  .skill-icon { display: none !important; }
+  .skill-tags {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    grid-template-columns: none !important;
+    gap: 3pt 4pt !important;
+  }
   .skill-tags li {
+    display: inline-flex !important;
     background: #fff !important;
     border: 1px solid #999 !important;
     color: #000 !important;
@@ -867,6 +914,8 @@ svg.icon {
     padding: 1pt 7pt !important;
     border-radius: 999px !important;
     font-weight: 500 !important;
+    min-height: 0 !important;
+    transform: none !important;
   }
 
   /* Links: clean, with URL only on long-form content */
