@@ -2,3 +2,5 @@ _site/
 .sass-cache/
 .jekyll-metadata
 .claude/
+.bundle-cache/
+Gemfile.lock
