@@ -475,6 +475,143 @@ svg.icon {
 .footer a { color: var(--c-text-muted); }
 .footer a:hover { color: var(--c-accent); }
 
+/* ======= Easter eggs ======= */
+#skills .section-title svg.icon {
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+#skills .section-title svg.icon:hover { transform: rotate(-15deg) scale(1.15); }
+#skills .section-title svg.icon:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.ee-stampable {
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.2s ease;
+}
+.ee-stampable:hover { border-bottom-color: var(--c-accent); }
+.ee-stampable:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.ee-rocket {
+  position: absolute;
+  font-size: 28px;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 9999;
+  transform-origin: center;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+}
+
+.ee-trail {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #fff8c8 0%, #ffae42 60%, rgba(255, 174, 66, 0) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  animation: ee-trail-fade 700ms ease-out forwards;
+}
+@keyframes ee-trail-fade {
+  0%   { opacity: 0.95; transform: scale(1); }
+  100% { opacity: 0;    transform: scale(0.2) translateY(20px); }
+}
+
+.ee-matrix {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.ee-stamp {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0) rotate(-30deg);
+  font-family: ui-monospace, "Courier New", monospace;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: #c81a2a;
+  border: 3px double #c81a2a;
+  padding: 6px 14px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 9999;
+  background: rgba(200, 26, 42, 0.05);
+  white-space: nowrap;
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 450ms ease;
+  text-shadow: 0 1px 0 rgba(200, 26, 42, 0.15);
+  box-shadow: 0 6px 18px rgba(200, 26, 42, 0.15);
+}
+.ee-stamp--in  { transform: translate(-50%, -50%) scale(1) rotate(-10deg); }
+.ee-stamp--out { opacity: 0; transform: translate(-50%, -50%) scale(1.05) rotate(-10deg); }
+
+.ee-confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  z-index: 9998;
+  border-radius: 1px;
+  animation: ee-confetti-fly 1000ms cubic-bezier(0.25, 0.6, 0.4, 1) forwards;
+}
+@keyframes ee-confetti-fly {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot, 360deg)); opacity: 0; }
+}
+
+.ee-firework {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  box-shadow: 0 0 6px currentColor;
+  animation: ee-firework-fly 1200ms cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+}
+@keyframes ee-firework-fly {
+  0%   { transform: translate(0, 0) scale(1);   opacity: 1; }
+  60%  { opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+}
+
+.ee-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  background: rgba(8, 14, 18, 0.94);
+  color: #6cffa8;
+  font-family: ui-monospace, "Courier New", monospace;
+  font-size: clamp(20px, 4vw, 38px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 16px 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(108, 255, 168, 0.45);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 350ms ease, transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-shadow: 0 0 10px rgba(108, 255, 168, 0.45);
+}
+.ee-banner--in  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.ee-banner--out { opacity: 0; transform: translate(-50%, -50%) scale(1.02); }
+.ee-banner__cursor { display: inline-block; margin-left: 2px; animation: ee-cursor 700ms steps(2) infinite; }
+@keyframes ee-cursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
 /* ======= Print ======= */
 @media print {
   @page { size: Letter; margin: 0.5in; }
@@ -721,4 +858,9 @@ svg.icon {
 
   /* Headings glue */
   h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+
+  /* Hide all easter-egg artifacts in print */
+  .ee-rocket, .ee-trail, .ee-matrix, .ee-stamp, .ee-confetti,
+  .ee-firework, .ee-banner { display: none !important; }
+  .ee-stampable { border-bottom: 0 !important; cursor: default !important; }
 }
