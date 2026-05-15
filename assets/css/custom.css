@@ -475,6 +475,40 @@ svg.icon {
 .footer a { color: var(--c-text-muted); }
 .footer a:hover { color: var(--c-accent); }
 
+/* ======= Org logos (inline next to employers, schools, issuers) ======= */
+.org-logo {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: -4px;
+  margin-right: 6px;
+  border-radius: 3px;
+  background: #fff;
+  padding: 1px;
+  object-fit: contain;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+.experiences-section .org-logo {
+  width: 22px;
+  height: 22px;
+  vertical-align: -6px;
+  margin-right: 8px;
+}
+.experiences-section .company a,
+.sidebar-wrapper .meta a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.experiences-section .company a:hover,
+.sidebar-wrapper .meta a:hover {
+  color: var(--c-accent);
+  border-bottom-color: currentColor;
+}
+.sidebar-wrapper .meta a { color: rgba(255, 255, 255, 0.78); }
+.sidebar-wrapper .meta a:hover { color: var(--c-accent); }
+
 /* ======= Easter eggs ======= */
 #skills .section-title svg.icon {
   cursor: pointer;
@@ -854,4 +888,13 @@ svg.icon {
   .ee-rocket, .ee-trail, .ee-stamp, .ee-confetti,
   .ee-firework, .ee-banner { display: none !important; }
   .ee-stampable { border-bottom: 0 !important; cursor: default !important; }
+
+  /* Hide org logos in print so the PDF stays clean and ATS-friendly */
+  .org-logo { display: none !important; }
+  /* Org links print as plain text */
+  .experiences-section .company a,
+  .sidebar-wrapper .meta a {
+    color: inherit !important;
+    border-bottom: 0 !important;
+  }
 }
