@@ -146,6 +146,26 @@ svg.icon {
   margin: 0;
 }
 
+/* CTA button sized for the dark sidebar — solid accent fill so it
+   reads as a button immediately, deepens on hover. Sits directly
+   under the tagline. */
+.profile-cta {
+  margin-top: 18px;
+  background: var(--c-accent) !important;
+  color: #fff !important;
+  border: 1px solid var(--c-accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  font-size: 0.85rem;
+  padding: 8px 16px;
+}
+.profile-cta:hover {
+  background: var(--c-accent-strong) !important;
+  border-color: var(--c-accent-strong);
+  color: #fff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+}
+
 .contact-list li {
   display: flex;
   align-items: center;
