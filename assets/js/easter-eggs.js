@@ -95,87 +95,7 @@
     makeKeyboardActivatable(icon, launch);
   }
 
-  // ----- 2. Matrix rain on AI cards -----
-
-  function initMatrixRain() {
-    var cards = document.querySelectorAll('.ai-section > ul > li');
-    if (!cards.length) return;
-    var glyphs = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモ01010110';
-
-    cards.forEach(function (card) {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function (e) {
-        if (e.target.closest('a')) return;
-        rainOn(card);
-      });
-    });
-
-    function rainOn(card) {
-      if (card.dataset.raining === '1') return;
-      card.dataset.raining = '1';
-
-      var prevPosition = card.style.position;
-      var prevOverflow = card.style.overflow;
-      if (getComputedStyle(card).position === 'static') card.style.position = 'relative';
-      card.style.overflow = 'hidden';
-
-      var canvas = el('canvas', 'ee-matrix');
-      var width = card.clientWidth;
-      var height = card.clientHeight;
-      var dpr = window.devicePixelRatio || 1;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-      card.appendChild(canvas);
-
-      var ctx = canvas.getContext('2d');
-      ctx.scale(dpr, dpr);
-      var fontSize = 14;
-      ctx.font = fontSize + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
-      ctx.textBaseline = 'top';
-
-      var columns = Math.max(1, Math.floor(width / fontSize));
-      var drops = new Array(columns);
-      for (var i = 0; i < columns; i++) drops[i] = Math.floor(Math.random() * -20);
-
-      var duration = 1800;
-      var start = performance.now();
-
-      function frame(now) {
-        var elapsed = now - start;
-        var fade = elapsed > duration - 600 ? Math.max(0, (duration - elapsed) / 600) : 1;
-
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.fillStyle = 'rgba(40, 200, 80, ' + fade + ')';
-        for (var c = 0; c < columns; c++) {
-          var ch = glyphs[Math.floor(Math.random() * glyphs.length)];
-          var y = drops[c] * fontSize;
-          if (y >= 0 && y < height) ctx.fillText(ch, c * fontSize, y);
-          drops[c] += 1;
-          if (y > height && Math.random() > 0.94) drops[c] = 0;
-        }
-
-        if (elapsed < duration) {
-          requestAnimationFrame(frame);
-        } else {
-          canvas.style.transition = 'opacity 350ms ease';
-          canvas.style.opacity = '0';
-          setTimeout(function () {
-            canvas.remove();
-            card.style.position = prevPosition;
-            card.style.overflow = prevOverflow;
-            card.dataset.raining = '0';
-          }, 380);
-        }
-      }
-      requestAnimationFrame(frame);
-    }
-  }
-
-  // ----- 3. PASS stamp on PCI-DSS / SOC 2 / CISSP -----
+  // ----- 2. PASS stamp on PCI-DSS / SOC 2 / CISSP -----
 
   function initStamps() {
     var targets = ['PCI-DSS', 'SOC 2', 'CISSP'];
@@ -219,7 +139,7 @@
     }
   }
 
-  // ----- 4. Konami code -----
+  // ----- 3. Konami code -----
 
   function initKonami() {
     var sequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
@@ -290,7 +210,6 @@
 
   function boot() {
     try { initRocket(); } catch (e) { /* noop */ }
-    try { initMatrixRain(); } catch (e) { /* noop */ }
     try { initStamps(); } catch (e) { /* noop */ }
     try { initKonami(); } catch (e) { /* noop */ }
   }

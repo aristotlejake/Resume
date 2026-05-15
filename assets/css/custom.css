@@ -524,15 +524,6 @@ svg.icon {
   100% { opacity: 0;    transform: scale(0.2) translateY(20px); }
 }
 
-.ee-matrix {
-  position: absolute;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  z-index: 1;
-  border-radius: inherit;
-}
-
 .ee-stamp {
   position: absolute;
   transform: translate(-50%, -50%) scale(0) rotate(-30deg);
@@ -860,7 +851,7 @@ svg.icon {
   h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
 
   /* Hide all easter-egg artifacts in print */
-  .ee-rocket, .ee-trail, .ee-matrix, .ee-stamp, .ee-confetti,
+  .ee-rocket, .ee-trail, .ee-stamp, .ee-confetti,
   .ee-firework, .ee-banner { display: none !important; }
   .ee-stampable { border-bottom: 0 !important; cursor: default !important; }
 }
