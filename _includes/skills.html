@@ -1,38 +1,30 @@
+{% assign icons = "/assets/images/skill-icons" | prepend: site.baseurl %}
 <section id="skills" class="skills-section section">
     <h2 class="section-title"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#i-rocket"/></svg>Skills &amp; Proficiency</h2>
 
     <div class="skill-group">
-        <h3 class="skill-group-title">AI &amp; Agentic Tooling</h3>
+        <h3 class="skill-group-title">Build</h3>
+        <p class="skill-group-tagline">How I provision infrastructure and ship code.</p>
         <ul class="skill-tags">
-            <li>Claude Code</li>
-            <li>MCP Servers</li>
-            <li>Cursor</li>
-            <li>GitHub Copilot</li>
-            <li>Prompt Engineering</li>
-            <li>AI-Assisted Code Review</li>
-            <li>LLM Threat Modeling</li>
-            <li>AI Policy &amp; Governance</li>
-            <li>AI Vendor Risk</li>
-        </ul>
-    </div>
-
-    <div class="skill-group">
-        <h3 class="skill-group-title">Cloud &amp; Infrastructure</h3>
-        <ul class="skill-tags">
-            <li>AWS</li>
-            <li>Microsoft Azure</li>
-            <li>Google Cloud</li>
-            <li>Microsoft 365</li>
+            <li><img class="skill-icon" src="{{icons}}/terraform.svg" alt="" aria-hidden="true">Terraform</li>
+            <li><img class="skill-icon" src="{{icons}}/githubactions.svg" alt="" aria-hidden="true">GitHub Actions</li>
             <li>Azure DevOps</li>
-            <li>Windows Server</li>
-            <li>Linux (RHEL, Ubuntu, Kali, Arch)</li>
-            <li>VMware</li>
-            <li>NetApp</li>
+            <li><img class="skill-icon" src="{{icons}}/docker.svg" alt="" aria-hidden="true">Docker / Podman</li>
+            <li><img class="skill-icon" src="{{icons}}/kubernetes.svg" alt="" aria-hidden="true">Kubernetes (k8s, k3s, Rancher)</li>
+            <li><img class="skill-icon" src="{{icons}}/nginx.svg" alt="" aria-hidden="true">NGINX</li>
+            <li><img class="skill-icon" src="{{icons}}/apache.svg" alt="" aria-hidden="true">Apache</li>
+            <li><img class="skill-icon skill-icon--brand" src="{{icons}}/powershell.svg" alt="" aria-hidden="true">PowerShell</li>
+            <li><img class="skill-icon" src="{{icons}}/bash.svg" alt="" aria-hidden="true">Bash</li>
+            <li><img class="skill-icon" src="{{icons}}/python.svg" alt="" aria-hidden="true">Python</li>
+            <li><img class="skill-icon" src="{{icons}}/nodejs.svg" alt="" aria-hidden="true">Node.js</li>
+            <li><img class="skill-icon" src="{{icons}}/javascript.svg" alt="" aria-hidden="true">JavaScript</li>
+            <li>HTML &amp; CSS</li>
         </ul>
     </div>
 
     <div class="skill-group">
-        <h3 class="skill-group-title">Security</h3>
+        <h3 class="skill-group-title">Defend</h3>
+        <p class="skill-group-tagline">What I do to keep the system trustworthy.</p>
         <ul class="skill-tags">
             <li>PCI-DSS</li>
             <li>SOC 2</li>
@@ -45,32 +37,39 @@
             <li>Vulnerability Management</li>
             <li>Penetration Testing</li>
             <li>Digital Forensics</li>
+            <li>LLM Threat Modeling</li>
+            <li>AI Policy &amp; Governance</li>
+            <li>AI Vendor Risk</li>
         </ul>
     </div>
 
     <div class="skill-group">
-        <h3 class="skill-group-title">DevOps &amp; Automation</h3>
+        <h3 class="skill-group-title">Operate</h3>
+        <p class="skill-group-tagline">What I run, monitor, and harden in production.</p>
         <ul class="skill-tags">
-            <li>Terraform</li>
-            <li>GitHub Actions</li>
-            <li>Docker / Podman</li>
-            <li>Kubernetes (k8s, k3s, Rancher)</li>
-            <li>NGINX</li>
-            <li>Apache</li>
+            <li><img class="skill-icon skill-icon--brand" src="{{icons}}/aws.svg" alt="" aria-hidden="true">AWS</li>
+            <li><img class="skill-icon skill-icon--brand" src="{{icons}}/azure.svg" alt="" aria-hidden="true">Microsoft Azure</li>
+            <li><img class="skill-icon" src="{{icons}}/gcp.svg" alt="" aria-hidden="true">Google Cloud</li>
+            <li>Microsoft 365</li>
+            <li>Windows Server</li>
+            <li><img class="skill-icon" src="{{icons}}/linux.svg" alt="" aria-hidden="true">Linux (RHEL, Ubuntu, Kali, Arch)</li>
+            <li><img class="skill-icon" src="{{icons}}/vmware.svg" alt="" aria-hidden="true">VMware</li>
+            <li>NetApp</li>
             <li>F5 Load Balancing</li>
             <li>LAN/WAN TCP/IP</li>
         </ul>
     </div>
 
     <div class="skill-group">
-        <h3 class="skill-group-title">Languages &amp; Scripting</h3>
+        <h3 class="skill-group-title">Ship with AI</h3>
+        <p class="skill-group-tagline">How I and my team move faster without losing the plot.</p>
         <ul class="skill-tags">
-            <li>PowerShell</li>
-            <li>Bash</li>
-            <li>Python</li>
-            <li>Node.js</li>
-            <li>JavaScript</li>
-            <li>HTML &amp; CSS</li>
+            <li><img class="skill-icon" src="{{icons}}/claude.svg" alt="" aria-hidden="true">Claude Code</li>
+            <li>MCP Servers</li>
+            <li><img class="skill-icon" src="{{icons}}/cursor.svg" alt="" aria-hidden="true">Cursor</li>
+            <li><img class="skill-icon" src="{{icons}}/copilot.svg" alt="" aria-hidden="true">GitHub Copilot</li>
+            <li>Prompt Engineering</li>
+            <li>AI-Assisted Code Review</li>
         </ul>
     </div>
 </section>
