@@ -397,6 +397,35 @@ svg.icon {
   font-weight: 600;
 }
 
+/* ======= AI & Emerging Tech ======= */
+.ai-section .summary p { margin-bottom: 18px; }
+.ai-section > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.ai-section > ul li {
+  padding: 14px 18px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--c-text-muted);
+  line-height: 1.55;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.ai-section > ul li:hover {
+  border-color: var(--c-accent);
+  transform: translateY(-1px);
+}
+.ai-section > ul li strong { color: var(--c-text); font-weight: 600; }
+@media (max-width: 720px) {
+  .ai-section > ul { grid-template-columns: 1fr; }
+}
+
 /* ======= Skills (tag chips) ======= */
 .skill-group { margin-bottom: 22px; }
 
@@ -466,6 +495,8 @@ svg.icon {
   .skill-tags li { border: 1px solid #999; background: #fff; color: #000; }
   .experiences-section .item { page-break-inside: avoid; border-left-color: #bbb; }
   .projects-section .item { page-break-inside: avoid; background: #fff; border-color: #bbb; }
+  .ai-section > ul { grid-template-columns: 1fr; }
+  .ai-section > ul li { page-break-inside: avoid; background: #fff; border-color: #bbb; }
   a { color: #000 !important; text-decoration: none; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8pt; color: #555; }
 }
