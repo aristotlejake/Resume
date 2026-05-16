@@ -139,13 +139,60 @@
     }
   }
 
+  // ----- ACCESS GRANTED (shared by Konami code + secret profile triple-click) -----
+
+  var accessFiring = false;
+
+  function accessGranted() {
+    if (accessFiring) return;
+    accessFiring = true;
+    var banner = el('div', 'ee-banner');
+    var inner = el('div', 'ee-banner__inner');
+    inner.textContent = '> ACCESS GRANTED';
+    banner.appendChild(inner);
+    var cursor = el('span', 'ee-banner__cursor');
+    cursor.textContent = '_';
+    inner.appendChild(cursor);
+    document.body.appendChild(banner);
+    requestAnimationFrame(function () { banner.classList.add('ee-banner--in'); });
+
+    var bursts = 6;
+    for (var b = 0; b < bursts; b++) {
+      setTimeout(firework, b * 320);
+    }
+
+    setTimeout(function () {
+      banner.classList.add('ee-banner--out');
+      setTimeout(function () { banner.remove(); accessFiring = false; }, 600);
+    }, 2600);
+  }
+
+  function firework() {
+    var cx = window.scrollX + window.innerWidth * (0.2 + Math.random() * 0.6);
+    var cy = window.scrollY + window.innerHeight * (0.2 + Math.random() * 0.5);
+    var palette = ['#4fb3bf', '#67d0db', '#e63946', '#f1c40f', '#2ecc71', '#f39c12'];
+    var color = palette[Math.floor(Math.random() * palette.length)];
+    var count = 34;
+    for (var i = 0; i < count; i++) {
+      var p = el('div', 'ee-firework');
+      var angle = (Math.PI * 2 * i) / count + Math.random() * 0.1;
+      var dist = 70 + Math.random() * 90;
+      p.style.left = cx + 'px';
+      p.style.top = cy + 'px';
+      p.style.background = color;
+      p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+      p.style.setProperty('--dy', (Math.sin(angle) * dist) + 'px');
+      document.body.appendChild(p);
+      setTimeout((function (n) { return function () { n.remove(); }; })(p), 1300);
+    }
+  }
+
   // ----- 3. Konami code -----
 
   function initKonami() {
     var sequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
                     'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     var pos = 0;
-    var firing = false;
 
     document.addEventListener('keydown', function (e) {
       var tag = (e.target && e.target.tagName) || '';
@@ -155,55 +202,174 @@
         pos++;
         if (pos === sequence.length) {
           pos = 0;
-          if (!firing) accessGranted();
+          accessGranted();
         }
       } else {
         pos = (key === sequence[0]) ? 1 : 0;
       }
     });
+  }
 
-    function accessGranted() {
-      firing = true;
-      var banner = el('div', 'ee-banner');
-      var inner = el('div', 'ee-banner__inner');
-      inner.textContent = '> ACCESS GRANTED';
-      banner.appendChild(inner);
-      var cursor = el('span', 'ee-banner__cursor');
-      cursor.textContent = '_';
-      inner.appendChild(cursor);
-      document.body.appendChild(banner);
-      requestAnimationFrame(function () { banner.classList.add('ee-banner--in'); });
+  // ----- 8. Secret profile triple-click: three rapid clicks → ACCESS GRANTED -----
 
-      var bursts = 6;
-      for (var b = 0; b < bursts; b++) {
-        setTimeout(firework, b * 320);
+  function initProfileTripleClick() {
+    var photo = document.querySelector('.profile-img');
+    if (!photo) return;
+    var clicks = 0;
+    var resetTimer = null;
+    photo.addEventListener('click', function () {
+      clicks++;
+      if (resetTimer) clearTimeout(resetTimer);
+      if (clicks >= 3) {
+        clicks = 0;
+        accessGranted();
+        return;
       }
+      resetTimer = setTimeout(function () { clicks = 0; }, 600);
+    });
+  }
+
+  // ----- 4. Profile scan: click user icon → scan line over photo + AUTHENTICATED -----
+
+  function initProfileScan() {
+    var icon = document.querySelector('#about .section-title svg.icon');
+    var photo = document.querySelector('.profile-img');
+    if (!icon || !photo) return;
+    icon.setAttribute('aria-label', 'Authenticate (try clicking)');
+    var scanning = false;
+
+    function scan() {
+      if (scanning) return;
+      scanning = true;
+
+      var photoRect = photo.getBoundingClientRect();
+      var line = el('div', 'ee-scanline');
+      line.style.left = (photoRect.left + window.scrollX) + 'px';
+      line.style.top = (photoRect.top + window.scrollY) + 'px';
+      line.style.width = photoRect.width + 'px';
+      line.style.setProperty('--scan-distance', photoRect.height + 'px');
+      document.body.appendChild(line);
+
+      setTimeout(function () { line.remove(); }, 1300);
 
       setTimeout(function () {
-        banner.classList.add('ee-banner--out');
-        setTimeout(function () { banner.remove(); firing = false; }, 600);
-      }, 2600);
+        var r = photo.getBoundingClientRect();
+        var badge = el('div', 'ee-auth');
+        badge.innerHTML = '<span class="ee-auth__check">✓</span> AUTHENTICATED';
+        badge.style.left = (r.left + window.scrollX + r.width / 2) + 'px';
+        badge.style.top = (r.top + window.scrollY + r.height * 0.65) + 'px';
+        document.body.appendChild(badge);
+        requestAnimationFrame(function () { badge.classList.add('ee-auth--in'); });
+        setTimeout(function () {
+          badge.classList.add('ee-auth--out');
+          setTimeout(function () { badge.remove(); scanning = false; }, 450);
+        }, 1500);
+      }, 1100);
     }
 
-    function firework() {
-      var cx = window.scrollX + window.innerWidth * (0.2 + Math.random() * 0.6);
-      var cy = window.scrollY + window.innerHeight * (0.2 + Math.random() * 0.5);
-      var palette = ['#4fb3bf', '#67d0db', '#e63946', '#f1c40f', '#2ecc71', '#f39c12'];
-      var color = palette[Math.floor(Math.random() * palette.length)];
-      var count = 34;
-      for (var i = 0; i < count; i++) {
-        var p = el('div', 'ee-firework');
-        var angle = (Math.PI * 2 * i) / count + Math.random() * 0.1;
-        var dist = 70 + Math.random() * 90;
-        p.style.left = cx + 'px';
-        p.style.top = cy + 'px';
-        p.style.background = color;
-        p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
-        p.style.setProperty('--dy', (Math.sin(angle) * dist) + 'px');
-        document.body.appendChild(p);
-        setTimeout((function (n) { return function () { n.remove(); }; })(p), 1300);
+    makeKeyboardActivatable(icon, scan);
+  }
+
+  // ----- 5. CPU pulse: click cpu icon → concentric rings + sparkles -----
+
+  function initCpuPulse() {
+    var icon = document.querySelector('#ai .section-title svg.icon');
+    if (!icon) return;
+    icon.setAttribute('aria-label', 'Pulse (try clicking)');
+
+    function pulse() {
+      var r = rectInDocument(icon);
+      for (var i = 0; i < 3; i++) {
+        (function (delay) {
+          setTimeout(function () {
+            var ring = el('div', 'ee-ring');
+            ring.style.left = r.cx + 'px';
+            ring.style.top = r.cy + 'px';
+            document.body.appendChild(ring);
+            setTimeout(function () { ring.remove(); }, 1300);
+          }, delay);
+        })(i * 220);
+      }
+      for (var s = 0; s < 9; s++) {
+        var sparkle = el('div', 'ee-sparkle');
+        sparkle.textContent = '✨';
+        sparkle.style.left = r.cx + 'px';
+        sparkle.style.top = r.cy + 'px';
+        var jitterX = (Math.random() - 0.5) * 80;
+        var jitterY = -(60 + Math.random() * 80);
+        sparkle.style.setProperty('--dx', jitterX + 'px');
+        sparkle.style.setProperty('--dy', jitterY + 'px');
+        sparkle.style.animationDelay = (s * 60) + 'ms';
+        document.body.appendChild(sparkle);
+        setTimeout((function (n) { return function () { n.remove(); }; })(sparkle), 1600 + s * 60);
       }
     }
+
+    makeKeyboardActivatable(icon, pulse);
+  }
+
+  // ----- 6. Briefcase years: click briefcase → year balloons fly up -----
+
+  function initBriefcaseYears() {
+    var icon = document.querySelector('#experience .section-title svg.icon');
+    if (!icon) return;
+    icon.setAttribute('aria-label', 'Career timeline (try clicking)');
+    var years = ['2013', '2015', '2018', '2021', '2025'];
+
+    function release() {
+      var r = rectInDocument(icon);
+      years.forEach(function (year, i) {
+        setTimeout(function () {
+          var badge = el('div', 'ee-year');
+          badge.textContent = year;
+          badge.style.left = r.cx + 'px';
+          badge.style.top = r.cy + 'px';
+          var dx = (Math.random() - 0.5) * 220;
+          var dy = -(140 + Math.random() * 100);
+          badge.style.setProperty('--dx', dx + 'px');
+          badge.style.setProperty('--dy', dy + 'px');
+          document.body.appendChild(badge);
+          setTimeout(function () { badge.remove(); }, 1700);
+        }, i * 130);
+      });
+    }
+
+    makeKeyboardActivatable(icon, release);
+  }
+
+  // ----- 7. Trophy achievement: click trophy → game-style banner -----
+
+  function initTrophyAchievement() {
+    var icon = document.querySelector('#achievements .section-title svg.icon');
+    if (!icon) return;
+    icon.setAttribute('aria-label', 'Unlock achievement (try clicking)');
+    var titles = ['Easter Egg Hunter', 'Trophy Inspector', 'Resume Sleuth',
+                  'Curious Recruiter', 'Keen Observer'];
+    var showing = false;
+
+    function unlock() {
+      if (showing) return;
+      showing = true;
+      var title = titles[Math.floor(Math.random() * titles.length)];
+
+      var banner = el('div', 'ee-achievement');
+      banner.innerHTML =
+        '<div class="ee-achievement__icon">🏆</div>' +
+        '<div class="ee-achievement__body">' +
+        '<div class="ee-achievement__label">ACHIEVEMENT UNLOCKED</div>' +
+        '<div class="ee-achievement__title"></div>' +
+        '</div>';
+      banner.querySelector('.ee-achievement__title').textContent = title;
+      document.body.appendChild(banner);
+      requestAnimationFrame(function () { banner.classList.add('ee-achievement--in'); });
+
+      setTimeout(function () {
+        banner.classList.add('ee-achievement--out');
+        setTimeout(function () { banner.remove(); showing = false; }, 500);
+      }, 2500);
+    }
+
+    makeKeyboardActivatable(icon, unlock);
   }
 
   // ----- Boot -----
@@ -212,6 +378,11 @@
     try { initRocket(); } catch (e) { /* noop */ }
     try { initStamps(); } catch (e) { /* noop */ }
     try { initKonami(); } catch (e) { /* noop */ }
+    try { initProfileScan(); } catch (e) { /* noop */ }
+    try { initCpuPulse(); } catch (e) { /* noop */ }
+    try { initBriefcaseYears(); } catch (e) { /* noop */ }
+    try { initTrophyAchievement(); } catch (e) { /* noop */ }
+    try { initProfileTripleClick(); } catch (e) { /* noop */ }
   }
 
   if (document.readyState === 'loading') {
