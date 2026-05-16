@@ -236,6 +236,40 @@ svg.icon {
   color: rgba(255, 255, 255, 0.85);
 }
 
+/* Interests as compact icon chips in the dark sidebar */
+.interests-chips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+}
+.interests-chips li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.92);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.interests-chips li:hover {
+  background: rgba(79, 179, 191, 0.18);
+  border-color: rgba(79, 179, 191, 0.55);
+  transform: translateY(-1px);
+}
+.ix-emoji {
+  font-size: 14px;
+  line-height: 1;
+  flex-shrink: 0;
+  /* Restore native emoji rendering even though parent overrides font */
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", emoji;
+}
+
 .lang-desc { color: rgba(255, 255, 255, 0.55); }
 
 /* ======= Main content ======= */
@@ -696,6 +730,183 @@ svg.icon {
 .ee-banner__cursor { display: inline-block; margin-left: 2px; animation: ee-cursor 700ms steps(2) infinite; }
 @keyframes ee-cursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
+/* Make section-title icons feel interactive */
+#about .section-title svg.icon,
+#ai .section-title svg.icon,
+#experience .section-title svg.icon,
+#achievements .section-title svg.icon {
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+#about .section-title svg.icon:hover,
+#ai .section-title svg.icon:hover,
+#experience .section-title svg.icon:hover,
+#achievements .section-title svg.icon:hover {
+  transform: scale(1.15);
+  color: var(--c-accent-strong);
+}
+#about .section-title svg.icon:focus-visible,
+#ai .section-title svg.icon:focus-visible,
+#experience .section-title svg.icon:focus-visible,
+#achievements .section-title svg.icon:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Profile-scan: scan line sweeps photo, then AUTHENTICATED badge */
+.ee-scanline {
+  position: absolute;
+  height: 3px;
+  background: linear-gradient(90deg,
+    rgba(79, 179, 191, 0) 0%,
+    rgba(79, 179, 191, 0.95) 50%,
+    rgba(79, 179, 191, 0) 100%);
+  box-shadow: 0 0 12px rgba(79, 179, 191, 0.8);
+  pointer-events: none;
+  z-index: 9998;
+  border-radius: 2px;
+  animation: ee-scan 1200ms cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+@keyframes ee-scan {
+  0%   { transform: translateY(0);                                opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(var(--scan-distance, 200px));      opacity: 0; }
+}
+
+.ee-auth {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0.7);
+  background: rgba(8, 38, 22, 0.92);
+  color: #6cffa8;
+  font-family: ui-monospace, "Courier New", monospace;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding: 8px 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(108, 255, 168, 0.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 0 8px rgba(108, 255, 168, 0.5);
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 320ms ease, transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ee-auth--in  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.ee-auth--out { opacity: 0; transform: translate(-50%, -50%) scale(1.05); }
+.ee-auth__check { color: #6cffa8; margin-right: 4px; }
+
+/* CPU pulse: concentric rings + sparkles */
+.ee-ring {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -9px;
+  border: 2px solid var(--c-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  animation: ee-ring-pulse 1300ms cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+}
+@keyframes ee-ring-pulse {
+  0%   { transform: scale(0.4); opacity: 0.95; }
+  100% { transform: scale(6);   opacity: 0;    }
+}
+
+.ee-sparkle {
+  position: absolute;
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 9999;
+  animation: ee-sparkle-float 1300ms ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+@keyframes ee-sparkle-float {
+  0%   { opacity: 0;   transform: translate(-50%, -50%) scale(0.5); }
+  20%  { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
+  100% { opacity: 0;
+         transform: translate(calc(-50% + var(--dx, 0)),
+                              calc(-50% + var(--dy, -80px))) scale(0.7); }
+}
+
+/* Briefcase years: balloon labels drift up */
+.ee-year {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--c-sidebar);
+  color: #fff;
+  font-family: ui-monospace, "Courier New", monospace;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--c-accent);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  animation: ee-year-rise 1700ms cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+@keyframes ee-year-rise {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  18%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0;
+         transform: translate(calc(-50% + var(--dx, 0)),
+                              calc(-50% + var(--dy, -160px))) scale(0.95); }
+}
+
+/* Trophy achievement: game-style slide-in banner */
+.ee-achievement {
+  position: fixed;
+  top: 80px;
+  right: -440px;
+  width: 380px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 110, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
+              0 0 0 1px rgba(255, 215, 110, 0.15) inset;
+  z-index: 10000;
+  pointer-events: none;
+  transition: right 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ee-achievement--in  { right: 24px; }
+.ee-achievement--out { right: -440px; transition-duration: 380ms; transition-timing-function: ease-in; }
+.ee-achievement__icon {
+  font-size: 36px;
+  line-height: 1;
+  animation: ee-trophy-bounce 800ms ease-in-out infinite alternate;
+  filter: drop-shadow(0 2px 6px rgba(255, 215, 110, 0.6));
+}
+@keyframes ee-trophy-bounce {
+  0%   { transform: translateY(0) rotate(-6deg); }
+  100% { transform: translateY(-6px) rotate(6deg); }
+}
+.ee-achievement__label {
+  font-family: ui-monospace, "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #ffd76e;
+  margin-bottom: 2px;
+}
+.ee-achievement__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
 /* ======= Print ======= */
 @media print {
   @page { size: Letter; margin: 0.5in; }
@@ -955,8 +1166,14 @@ svg.icon {
 
   /* Hide all easter-egg artifacts in print */
   .ee-rocket, .ee-trail, .ee-stamp, .ee-confetti,
-  .ee-firework, .ee-banner { display: none !important; }
+  .ee-firework, .ee-banner,
+  .ee-scanline, .ee-auth, .ee-ring, .ee-sparkle,
+  .ee-year, .ee-achievement { display: none !important; }
   .ee-stampable { border-bottom: 0 !important; cursor: default !important; }
+  #about .section-title svg.icon,
+  #ai .section-title svg.icon,
+  #experience .section-title svg.icon,
+  #achievements .section-title svg.icon { cursor: default !important; }
 
   /* Hide org logos in print so the PDF stays clean and ATS-friendly */
   .org-logo { display: none !important; }
