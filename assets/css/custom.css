@@ -861,6 +861,30 @@ svg.icon {
                               calc(-50% + var(--dy, -160px))) scale(0.95); }
 }
 
+/* Harry Potter portrait: real motion comes from a video swap, layered
+   on top of the still .profile-img and crossfaded in for ~6 seconds. */
+.profile-img-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+}
+.profile-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+.profile-video.is-playing { opacity: 1; }
+
 /* Trophy achievement: game-style slide-in banner */
 .ee-achievement {
   position: fixed;
@@ -1168,7 +1192,8 @@ svg.icon {
   .ee-rocket, .ee-trail, .ee-stamp, .ee-confetti,
   .ee-firework, .ee-banner,
   .ee-scanline, .ee-auth, .ee-ring, .ee-sparkle,
-  .ee-year, .ee-achievement { display: none !important; }
+  .ee-year, .ee-achievement,
+  .profile-video { display: none !important; }
   .ee-stampable { border-bottom: 0 !important; cursor: default !important; }
   #about .section-title svg.icon,
   #ai .section-title svg.icon,
