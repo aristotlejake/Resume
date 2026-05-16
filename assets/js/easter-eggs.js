@@ -210,23 +210,49 @@
     });
   }
 
-  // ----- 8. Secret profile triple-click: three rapid clicks → ACCESS GRANTED -----
+  // ----- 8. Harry Potter portrait: three rapid clicks → the photo briefly comes alive -----
 
   function initProfileTripleClick() {
     var photo = document.querySelector('.profile-img');
     if (!photo) return;
     var clicks = 0;
     var resetTimer = null;
+    var animating = false;
+
     photo.addEventListener('click', function () {
+      if (animating) return;
       clicks++;
       if (resetTimer) clearTimeout(resetTimer);
       if (clicks >= 3) {
         clicks = 0;
-        accessGranted();
+        wakePortrait();
         return;
       }
       resetTimer = setTimeout(function () { clicks = 0; }, 600);
     });
+
+    function wakePortrait() {
+      animating = true;
+      var DURATION = 4000;
+      var video = document.querySelector('.profile-video');
+
+      if (video) {
+        try {
+          video.currentTime = 0;
+          var p = video.play();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+          video.classList.add('is-playing');
+        } catch (e) { /* noop */ }
+      }
+
+      setTimeout(function () {
+        if (video) {
+          video.classList.remove('is-playing');
+          setTimeout(function () { try { video.pause(); } catch (e) {} }, 320);
+        }
+        animating = false;
+      }, DURATION);
+    }
   }
 
   // ----- 4. Profile scan: click user icon → scan line over photo + AUTHENTICATED -----
