@@ -5,4 +5,4 @@
 Contact: mailto:mail@jakearmstrong.me
 Expires: 2027-04-24T00:00:00.000Z
 Preferred-Languages: en
-Canonical: https://resume.jakearmstrong.me/.well-known/security.txt
+Canonical: https://cv.jakearmstrong.me/.well-known/security.txt
