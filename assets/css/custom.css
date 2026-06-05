@@ -933,7 +933,7 @@ svg.icon {
 
 /* ======= Print ======= */
 @media print {
-  @page { size: Letter; margin: 0.5in; }
+  @page { size: Letter; margin: 0.4in; }
 
   /* Force light theme regardless of saved preference or prefers-color-scheme */
   :root,
@@ -955,7 +955,8 @@ svg.icon {
   html, body {
     background: #fff !important;
     color: #000 !important;
-    font-size: 10pt !important;
+    font-size: 9.5pt !important;
+    line-height: 1.35 !important;
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -972,6 +973,30 @@ svg.icon {
   .languages-container, .interests-container { display: none !important; }
   .credential-link { display: none !important; }
   .profile-img { display: none !important; }
+
+  /* One-page CV: drop sections that restate Experience / Education /
+     Certifications / Skills. The website keeps them; the print PDF stays
+     to a single, focused page.
+       - AI & Emerging Tech  -> covered by the profile's AI paragraph,
+         the Zonos AI bullet, and the "Ship with AI" / AI-governance skills.
+       - Key Achievements    -> a highlights reel of the above. */
+  #ai, #achievements { display: none !important; }
+
+  /* Career Profile: keep the identity paragraph and the AI paragraph; drop
+     the middle one — it narrates the Zonos/SkyWest/Wilson history that the
+     Experience section spells out in full right below. */
+  #about .summary p:nth-of-type(2) { display: none !important; }
+
+  /* Trim to the three roles that carry the story; the 2015–16 Utah Tech
+     sys-admin role overlaps the Wilson 2013–18 period. */
+  .experiences-section .item:last-of-type { display: none !important; }
+
+  /* Education: keep the M.S. and B.S.; drop the A.S. (Pre-Engineering). */
+  .education-list .item:nth-of-type(3) { display: none !important; }
+
+  /* Certifications: lead with CISSP and the AI credential; drop the
+     13-year-old entry-level forensics certs. */
+  .certifications-list .item:nth-of-type(n+3) { display: none !important; }
 
   /* Single-column layout, no forced break between sidebar and main */
   .wrapper { box-shadow: none !important; border-radius: 0 !important; max-width: none !important; }
@@ -1004,18 +1029,18 @@ svg.icon {
   }
   .name {
     color: #000 !important;
-    font-size: 22pt !important;
+    font-size: 20pt !important;
     margin: 0 !important;
     line-height: 1.1 !important;
   }
   .tagline {
     color: #444 !important;
-    font-size: 11pt !important;
+    font-size: 10.5pt !important;
     margin: 1pt 0 0 !important;
-    line-height: 1.3 !important;
+    line-height: 1.25 !important;
   }
   .sidebar-wrapper a { color: #000 !important; }
-  .contact-container { margin: 0 0 8pt !important; }
+  .contact-container { margin: 0 0 3pt !important; }
   .contact-list {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -1027,8 +1052,10 @@ svg.icon {
   .contact-list li { font-size: 9.5pt !important; line-height: 1.3 !important; margin: 0 !important; }
   .contact-list svg.icon { color: #444 !important; margin-right: 4pt !important; }
 
-  /* Education & Certifications: each item on one line, tight stack */
-  .sidebar-wrapper .container-block { margin: 0 0 6pt !important; }
+  /* Education & Certifications: each item on one line, tight stack.
+     styles-6.css gives sidebar container-blocks 30px padding (fine in the
+     dark on-screen column, dead space in print) — zero it out. */
+  .sidebar-wrapper .container-block { margin: 0 0 5pt !important; padding: 0 !important; }
   .sidebar-wrapper .container-block:last-child { margin-bottom: 0 !important; }
   .container-block-title {
     color: #000 !important;
@@ -1077,32 +1104,39 @@ svg.icon {
   }
 
   /* Sections tight */
-  .section { margin-bottom: 10pt !important; scroll-margin-top: 0 !important; }
-  .section:first-of-type { margin-top: 4pt !important; }
+  .section { margin-bottom: 3pt !important; scroll-margin-top: 0 !important; }
+  .section:first-of-type { margin-top: 0 !important; }
   .section-title {
     color: #000 !important;
     border-color: #999 !important;
     font-size: 9.5pt !important;
-    padding-bottom: 2pt !important;
-    margin-bottom: 6pt !important;
+    padding-bottom: 1pt !important;
+    margin-bottom: 3pt !important;
   }
   .section-title svg.icon { color: #444 !important; }
-  .summary p { color: #000 !important; font-size: 10pt !important; line-height: 1.45 !important; margin-bottom: 5pt !important; }
+  .summary p { color: #000 !important; font-size: 9.5pt !important; line-height: 1.35 !important; margin-bottom: 3pt !important; }
   .summary strong { color: #000 !important; }
 
   /* Experience: drop timeline rail, tighten bullets */
   .experiences-section .item {
     border-left: 0 !important;
-    padding: 0 0 8pt 0 !important;
+    margin: 0 0 4pt 0 !important;
+    padding: 0 !important;
     page-break-inside: avoid !important;
   }
+  .experiences-section .item:last-of-type { margin-bottom: 0 !important; }
   .experiences-section .item::before { display: none !important; }
-  .job-title { font-size: 11pt !important; color: #000 !important; }
-  .experiences-section .company { color: #444 !important; font-size: 9.5pt !important; margin: 0 0 3pt !important; }
-  .experiences-section .time { color: #444 !important; font-size: 9.5pt !important; }
-  .experiences-section .details ul { padding-left: 14pt !important; margin: 0 !important; }
-  .experiences-section .details li { color: #000 !important; font-size: 9.5pt !important; line-height: 1.4 !important; margin-bottom: 2pt !important; }
+  .job-title { font-size: 10pt !important; color: #000 !important; }
+  .experiences-section .company { color: #444 !important; font-size: 9pt !important; margin: 0 0 2pt !important; }
+  .experiences-section .time { color: #444 !important; font-size: 9pt !important; }
+  .experiences-section .details ul { padding-left: 13pt !important; margin: 0 !important; }
+  .experiences-section .details li { color: #000 !important; font-size: 9.5pt !important; line-height: 1.3 !important; margin-bottom: 1pt !important; }
   .experiences-section .details li strong { color: #000 !important; }
+
+  /* Zonos has five bullets; the monitoring/SLO line is the most expendable
+     (the reliability story is implied by the broader infra + audit bullets).
+     Dropping it in print keeps the CV to a single page. */
+  #experience .item:first-of-type .details li:nth-child(4) { display: none !important; }
 
   /* AI section: plain bullet list, no cards */
   .ai-section .summary p { margin-bottom: 5pt !important; }
@@ -1149,29 +1183,44 @@ svg.icon {
   .projects-section .project-title { color: #000 !important; }
   .projects-section .item:hover { transform: none !important; border-color: transparent !important; }
 
-  /* Skills: compact bordered chips, flow as flex (no grid in print) */
-  .skill-group { margin-bottom: 6pt !important; page-break-inside: avoid !important; }
-  .skill-group-title { color: #000 !important; font-size: 9pt !important; margin: 0 0 3pt !important; }
+  /* Skills: pills are too tall for a one-pager. Print each group as a
+     dense, classic-CV inline list — bold label, then a middot-separated
+     run of every skill. Keeps the full skill set in a fraction of the
+     vertical space. */
+  .skill-group { margin: 0 0 0.5pt !important; page-break-inside: avoid !important; }
   .skill-group-tagline { display: none !important; }
   .skill-icon { display: none !important; }
+  .skill-group-title {
+    display: inline !important;
+    color: #000 !important;
+    font-size: 9pt !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    letter-spacing: 0.04em;
+  }
+  .skill-group-title::after { content: ":\00A0\00A0"; font-weight: 700; }
   .skill-tags {
-    display: flex !important;
-    flex-wrap: wrap !important;
+    display: inline !important;
     grid-template-columns: none !important;
-    gap: 3pt 4pt !important;
+    gap: 0 !important;
+    font-size: 9pt !important;
+    line-height: 1.35 !important;
+    color: #000 !important;
   }
   .skill-tags li {
-    display: inline-flex !important;
-    background: #fff !important;
-    border: 1px solid #999 !important;
+    display: inline !important;
+    background: transparent !important;
+    border: 0 !important;
     color: #000 !important;
-    font-size: 8.5pt !important;
-    padding: 1pt 7pt !important;
-    border-radius: 999px !important;
-    font-weight: 500 !important;
+    font-size: 9pt !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    font-weight: 400 !important;
     min-height: 0 !important;
     transform: none !important;
   }
+  .skill-tags li::after { content: "\00A0\00B7\00A0"; color: #888; }
+  .skill-tags li:last-child::after { content: ""; }
 
   /* Links: clean, with URL only on long-form content */
   a { color: #000 !important; text-decoration: none !important; }
