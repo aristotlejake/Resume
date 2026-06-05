@@ -964,6 +964,11 @@ svg.icon {
   /* Strip browser-default heading margins so my own margins are authoritative */
   h1, h2, h3, h4, h5, h6 { margin: 0 !important; padding: 0 !important; }
 
+  /* Inline <strong> emphasis (AI, Terraform, 7, 250+, …) reads as visual
+     noise on a print CV — flatten it to normal weight. Kept bold on the
+     website; headings/labels are unaffected (they aren't <strong>). */
+  strong, b { font-weight: 400 !important; }
+
   /* Reset list spacing */
   ul, ol { margin: 0; padding: 0; }
   .list-unstyled { margin: 0 !important; padding: 0 !important; }
