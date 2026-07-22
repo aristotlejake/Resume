@@ -979,22 +979,17 @@ svg.icon {
   .credential-link { display: none !important; }
   .profile-img { display: none !important; }
 
-  /* One-page CV: drop sections that restate Experience / Education /
-     Certifications / Skills. The website keeps them; the print PDF stays
-     to a single, focused page.
-       - AI & Emerging Tech  -> covered by the profile's AI paragraph,
-         the Zonos AI bullet, and the "Ship with AI" / AI-governance skills.
-       - Key Achievements    -> a highlights reel of the above. */
-  #ai, #achievements { display: none !important; }
+  /* Two-page CISO CV: keep Selected Achievements (a highlights reel that
+     leads the document) and Core Competencies. The AI & Emerging Tech
+     section is still dropped in print — its story is carried by the
+     summary, the Selected Achievements AI line, the Zonos AI bullet, the
+     AI-governance competencies, and the "Ship with AI" skills. */
+  #ai { display: none !important; }
 
   /* Career Profile: keep the identity paragraph and the AI paragraph; drop
      the middle one — it narrates the Zonos/SkyWest/Wilson history that the
      Experience section spells out in full right below. */
   #about .summary p:nth-of-type(2) { display: none !important; }
-
-  /* Trim to the three roles that carry the story; the 2015–16 Utah Tech
-     sys-admin role overlaps the Wilson 2013–18 period. */
-  .experiences-section .item:last-of-type { display: none !important; }
 
   /* Education: keep the M.S. and B.S.; drop the A.S. (Pre-Engineering). */
   .education-list .item:nth-of-type(3) { display: none !important; }
@@ -1130,6 +1125,10 @@ svg.icon {
     page-break-inside: avoid !important;
   }
   .experiences-section .item:last-of-type { margin-bottom: 0 !important; }
+  /* The current role is long (6 bullets); let it flow across the page break
+     so Experience starts on page 1 and the two pages balance. Short prior
+     roles keep the avoid rule above and stay intact. */
+  .experiences-section .item:first-of-type { page-break-inside: auto !important; }
   .experiences-section .item::before { display: none !important; }
   .job-title { font-size: 10pt !important; color: #000 !important; }
   .experiences-section .company { color: #444 !important; font-size: 9pt !important; margin: 0 0 2pt !important; }
@@ -1137,11 +1136,6 @@ svg.icon {
   .experiences-section .details ul { padding-left: 13pt !important; margin: 0 !important; }
   .experiences-section .details li { color: #000 !important; font-size: 9.5pt !important; line-height: 1.3 !important; margin-bottom: 1pt !important; }
   .experiences-section .details li strong { color: #000 !important; }
-
-  /* Zonos has five bullets; the monitoring/SLO line is the most expendable
-     (the reliability story is implied by the broader infra + audit bullets).
-     Dropping it in print keeps the CV to a single page. */
-  #experience .item:first-of-type .details li:nth-child(4) { display: none !important; }
 
   /* AI section: plain bullet list, no cards */
   .ai-section .summary p { margin-bottom: 5pt !important; }
