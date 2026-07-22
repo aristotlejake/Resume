@@ -398,6 +398,94 @@
     makeKeyboardActivatable(icon, unlock);
   }
 
+  // ----- 9. Core Competencies threat map: click globe → incoming attacks, all blocked -----
+
+  function initCompetencyThreatMap() {
+    var icon = document.querySelector('#competencies .section-title svg.icon');
+    if (!icon) return;
+    icon.setAttribute('aria-label', 'Threat map (try clicking)');
+    var firing = false;
+
+    function run() {
+      if (firing) return;
+      firing = true;
+      var target = rectInDocument(icon);
+      var total = 14;
+      var blocked = 0;
+
+      var counter = el('div', 'ee-threatcount');
+      counter.textContent = 'THREATS BLOCKED: 0';
+      counter.style.left = target.cx + 'px';
+      counter.style.top = (target.cy - 28) + 'px';
+      document.body.appendChild(counter);
+      requestAnimationFrame(function () { counter.classList.add('ee-threatcount--in'); });
+
+      for (var i = 0; i < total; i++) {
+        (function (delay) {
+          setTimeout(function () { launchThreat(); }, delay);
+        })(i * 110);
+      }
+
+      function launchThreat() {
+        // Origin: a random point on the viewport edge, in document coordinates.
+        var vw = window.innerWidth, vh = window.innerHeight;
+        var edge = Math.floor(Math.random() * 4), ox, oy;
+        if (edge === 0) { ox = Math.random() * vw; oy = 0; }
+        else if (edge === 1) { ox = vw; oy = Math.random() * vh; }
+        else if (edge === 2) { ox = Math.random() * vw; oy = vh; }
+        else { ox = 0; oy = Math.random() * vh; }
+        ox += window.scrollX;
+        oy += window.scrollY;
+
+        var dx = target.cx - ox, dy = target.cy - oy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+        var line = el('div', 'ee-threat-line');
+        line.style.left = ox + 'px';
+        line.style.top = oy + 'px';
+        line.style.width = dist + 'px';
+        line.style.transform = 'rotate(' + angle + 'deg)';
+        document.body.appendChild(line);
+
+        var dot = el('div', 'ee-threat-dot');
+        dot.style.left = ox + 'px';
+        dot.style.top = oy + 'px';
+        dot.style.setProperty('--dx', dx + 'px');
+        dot.style.setProperty('--dy', dy + 'px');
+        document.body.appendChild(dot);
+
+        setTimeout(function () {
+          line.remove();
+          dot.remove();
+
+          var pop = el('div', 'ee-threat-block');
+          pop.textContent = '✓';
+          pop.style.left = target.cx + 'px';
+          pop.style.top = target.cy + 'px';
+          document.body.appendChild(pop);
+          requestAnimationFrame(function () { pop.classList.add('ee-threat-block--in'); });
+          setTimeout(function () { pop.remove(); }, 600);
+
+          blocked++;
+          counter.textContent = 'THREATS BLOCKED: ' + blocked;
+          if (blocked === total) setTimeout(finish, 250);
+        }, 640);
+      }
+
+      function finish() {
+        counter.textContent = '0 ACTIVE THREATS · SECURED';
+        counter.classList.add('ee-threatcount--done');
+        setTimeout(function () {
+          counter.classList.add('ee-threatcount--out');
+          setTimeout(function () { counter.remove(); firing = false; }, 500);
+        }, 1200);
+      }
+    }
+
+    makeKeyboardActivatable(icon, run);
+  }
+
   // ----- Boot -----
 
   function boot() {
@@ -409,6 +497,7 @@
     try { initBriefcaseYears(); } catch (e) { /* noop */ }
     try { initTrophyAchievement(); } catch (e) { /* noop */ }
     try { initProfileTripleClick(); } catch (e) { /* noop */ }
+    try { initCompetencyThreatMap(); } catch (e) { /* noop */ }
   }
 
   if (document.readyState === 'loading') {
